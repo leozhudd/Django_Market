@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block css %}
+  <link href="../static/css/login.css" rel="stylesheet">
+{% endblock %}
+{% block title %}登录页面{% endblock %}
+{% block body %}
+
+<form class="form-signin" action="" method="post" role="form">
+{% csrf_token %}
+{% if message %}
+  <div class="alert alert-warning">{{ message }}</div>
+{% endif %}
+
+        <h2 class="form-signin-heading text-center">欢迎登录！</h2>
+        
+        <div class="form-signin">
+        {{ login_form.username.label_tag }}
+        {{ login_form.username}}
+        </div>
+        <div class="form-signin">
+        {{ login_form.password.label_tag }}
+        {{ login_form.password }}
+        </div>
+        <div class="form-signin">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        </div>
+</form>
+{% endblock %}

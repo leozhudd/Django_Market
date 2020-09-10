@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block css %}
+  <link href="../static/css/add_goods.css" rel="stylesheet">
+{% endblock %}
+{% block title %}添加新商品{% endblock %}
+{% block body %}
+
+        <form enctype="multipart/form-data" class='form-add_goods' action="/add_goods/" method="post">
+        {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+
+        {% csrf_token %}
+
+
+        <h2 class="form-add_goods-heading text-center">上架新商品</h2>
+            <div class="form-group">
+            {{ goods_form.name.label_tag }}
+            {{ goods_form.name }}
+            </div>
+            <div class="form-group">
+            {{ goods_form.description.label_tag }}
+            {{ goods_form.description }}
+            </div>
+            <div class="form-group">
+            {{ goods_form.price.label_tag }}
+            {{ goods_form.price }}
+            </div>
+            <div class="form-group">
+            {{ goods_form.trade_location.label_tag }}
+            {{ goods_form.trade_location }}
+            </div>
+            <div class="form-group">
+            {{ goods_form.category.label_tag }}
+            {{ goods_form.category }}
+            </div>
+            <div class="form-group">
+            {{ goods_form.picture.label_tag }}
+            {{ goods_form.picture }}
+            </div>
+            <div class="form-group">
+            {{ goods_form.goods_phone.label_tag }}
+            {{ goods_form.goods_phone }}
+            </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+      </form>
+
+{% endblock %}

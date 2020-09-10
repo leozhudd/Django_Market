@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block css %}<link href="../static/css/profile.css" rel="stylesheet">{% endblock %}
+{% block title %}{{ user.username }}的个人中心{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="main">
+            <div class="top clearfix">
+                <div id="user_msg">
+                    <div class="name">{{ user.username }}</div>
+                    <p class="has_sell">已卖出<span>5</span>件商品</p>
+                </div>
+            </div>
+
+            <div id="my_products">
+                <div id="onsale_pro">
+                    {% for goods in user_goods %}
+                    <div class="enshr_each">
+                        <div class="enshr_info">
+                            <h4><a href="{% url 'goods' goods.pk %}"  target="_blank">{{ goods.name }}</a></h4>
+                            <h5>{{ goods.description }}</h5>
+                            <div class="enshr_state">
+                                <span class="enshr_info_price">¥{{ goods.price }}</span>
+                                <span class="enshr_info_address">{{ goods.trade_location }}</span>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'goods' goods.pk %}" >
+                            <img class="enshr_ph" src="{{ goods.picture.url }}" />
+                        </a>
+                         
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
