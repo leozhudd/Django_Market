@@ -14,7 +14,7 @@ class RegisterForm(forms.Form):
 class GoodsForm(forms.ModelForm):
     class Meta:
         model = Goods
-        exclude = ()
+        exclude = ("available","buy_username")
         
         labels = {
             "name":"物品名称",       #用于html页面中显示的名字

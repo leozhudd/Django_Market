@@ -34,30 +34,46 @@
 							<td>交易地点</td>
 							<td>{{ goods.trade_location }}</td>
 							</tr>
+
+							{% if goods.goods_phone %}
 							<tr>
 							<td>联系方式</td>
 							<td>{{ goods.goods_phone }}</td>
 							</tr>
+							{% endif %}
+
 							<tr>
 							<td>商品状态</td>
 							<td>{{ goods.available }}</td>
 							</tr>
+
+							{% ifequal goods.buy_username "null" %}
+							{% else %}
 							<tr>
 							<td>谁买了它</td>
 							<td>{{ goods.buy_username }}</td>
 							</tr>
+							{% endifequal %}
+
 						</tbody>
 					</table>
 
-					<dl>
-                        <dt>{{ goods.description }}</dt>
-					</dl>
+					<mark>{{ goods.description }}</mark>
 					
-					{% if goods.available %}
-					{% comment %} <a class="btn btn-primary" href={% url 'addgoods' %} role="button">立即购买</a> {% endcomment %}
-					<a class="btn btn-primary" href="/goods/{{goods.id}}/1" role="button">立即购买</a>
-					{% else %}
-					<a class="btn btn-primary" href="/goods/{{goods.id}}/2" role="button">取消购买</a>
+					
+					{% if not goods.available %}
+					<img src="../static/png/sold.png" class="img-responsive" alt="Responsive image">
+					{% endif %}
+
+					{% if request.user.is_authenticated %}
+						{% if goods.available %}
+						<br><br>
+						<a class="btn btn-primary" href="/goods/{{goods.id}}/1" role="button">立即购买</a>
+						{% else %}
+						{% ifequal request.user.username goods.buy_username %}
+							<a class="btn btn-primary" href="/goods/{{goods.id}}/2" role="button">取消购买</a>
+						{% endifequal %}
+						{% endif %}
 					{% endif %}
                     
 				</div>

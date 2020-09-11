@@ -21,6 +21,8 @@ urlpatterns = [
     path('index/<int:category_id>', market.views.index_category),
     path('profile/', market.views.profile),
 
+    path('delete/<int:goods_id>', market.views.delete),
+
     re_path('media/(?P<path>.*)',serve,
     {'document_root': settings.MEDIA_ROOT})
 ]

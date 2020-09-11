@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     goods_all = Goods.objects.all()
     category_list = Category.objects.all()
-    user_id = request.user.id
     return render(request, 'index.html',
         {
             'goods_all':goods_all,
@@ -59,7 +58,7 @@ def register(request):
             username = register_form.cleaned_data['username']
             password1 = register_form.cleaned_data['password1']
             password2 = register_form.cleaned_data['password2']
-            email = register_form.cleaned_data['email']
+            # email = register_form.cleaned_data['email']
             if password1 != password2:  # 判断两次密码是否相同
                 message = "两次输入的密码不同！"
                 return render(request, 'register.html', locals())
@@ -68,13 +67,9 @@ def register(request):
                 if User.objects.filter(username=username):  # 用户名唯一
                     message = '用户已经存在，请重新选择用户名！'
                     return render(request, 'register.html', locals())
-                same_email_user = User.objects.filter(email=email)
-                if same_email_user:  # 邮箱地址唯一
-                    message = '该邮箱地址已被注册，请使用别的邮箱！'
-                    return render(request, 'register.html', locals())
 
                 # 当一切都OK的情况下，创建新用户
-                d=dict(username=username,password=password1,email=email,is_staff=0,is_superuser=1)
+                d=dict(username=username,password=password1,is_staff=0,is_superuser=0)
                 new_user = User.objects.create_user(**d)
                 new_user.save()
                 return redirect('/login/')  # 自动跳转到登录页面
@@ -152,3 +147,7 @@ def profile(request):
             'category_list':category_list,
         }
     )
+
+def delete(request, goods_id):
+    Goods.objects.filter(id=goods_id).delete()
+    return HttpResponseRedirect('../../profile/')

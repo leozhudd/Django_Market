@@ -8,7 +8,7 @@
             <div class="top clearfix">
                 <div id="user_msg">
                     <div class="name">{{ user.username }}</div>
-                    <p class="has_sell">已卖出<span>5</span>件商品</p>
+                    <p class="has_sell">在此查看我发布的商品</p>
                 </div>
             </div>
 
@@ -23,12 +23,13 @@
                                 <span class="enshr_info_price">¥{{ goods.price }}</span>
                                 <span class="enshr_info_address">{{ goods.trade_location }}</span>
                             </div>
+                            <a class="btn btn-primary" href="/delete/{{goods.id}}" role="button">下架（不可恢复）</a>
                         </div>
 
                         <a href="{% url 'goods' goods.pk %}" >
                             <img class="enshr_ph" src="{{ goods.picture.url }}" />
                         </a>
-                         
+                        
                     </div>
                     {% endfor %}
                 </div>
