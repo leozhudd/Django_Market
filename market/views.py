@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpResponse
 from .forms import UserForm, RegisterForm, GoodsForm
 from django.contrib.auth.models import User
@@ -86,18 +86,26 @@ def logoutView(request):
     logout(request)
     return redirect('/index/')
 
-def goods_page(requset, goods_id):
-    
-    # if request.user.is_authenticated:
-    #     user = request.user
-    #     user_profile = UserProfile.objects.get(user = user)
-    # else:
-    #     user_profile = []
-    # comment_form = CommentForm()
-    
+def goods_page(request, goods_id):
     goods = Goods.objects.get(id=goods_id)
     context_dic = {'goods':goods}
-    return render(requset, 'items.html',context_dic)
+    return render(request, 'items.html',context_dic)
+
+
+def goods_page_modi(request, goods_id, modi_flag):
+    goods = Goods.objects.get(id=goods_id)
+
+    if modi_flag == 1:
+            goods.available = False
+            goods.buy_username = request.user.username
+            goods.save()
+        
+    elif modi_flag == 2:
+            goods.available = True
+            goods.buy_username = '还没有人购买，心动不如行动哦！'
+            goods.save()
+
+    return HttpResponseRedirect('../../index/')
 
 
 def search(request):

@@ -38,6 +38,14 @@
 							<td>联系方式</td>
 							<td>{{ goods.goods_phone }}</td>
 							</tr>
+							<tr>
+							<td>商品状态</td>
+							<td>{{ goods.available }}</td>
+							</tr>
+							<tr>
+							<td>谁买了它</td>
+							<td>{{ goods.buy_username }}</td>
+							</tr>
 						</tbody>
 					</table>
 
@@ -45,8 +53,13 @@
                         <dt>{{ goods.description }}</dt>
 					</dl>
 					
-
-                    <button type="button" class="btn btn-primary">立即购买</button>
+					{% if goods.available %}
+					{% comment %} <a class="btn btn-primary" href={% url 'addgoods' %} role="button">立即购买</a> {% endcomment %}
+					<a class="btn btn-primary" href="/goods/{{goods.id}}/1" role="button">立即购买</a>
+					{% else %}
+					<a class="btn btn-primary" href="/goods/{{goods.id}}/2" role="button">取消购买</a>
+					{% endif %}
+                    
 				</div>
 	</div>
 

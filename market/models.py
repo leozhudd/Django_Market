@@ -20,5 +20,8 @@ class Goods(models.Model):
     goods_phone = models.IntegerField(null=True,blank=True)
     publish_time = models.DateField(auto_now_add=True,blank=True,null=True)
 
+    available = models.BooleanField(default=True)
+    buy_username = models.CharField(default='null', max_length=128)
+
     def __str__(self):
         return self.name
